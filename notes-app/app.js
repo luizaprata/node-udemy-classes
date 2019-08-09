@@ -1,4 +1,8 @@
-const fs = require("fs");
-fs.writeFileSync("note.txt", "olar ");
+const validator = require("validator");
 
-fs.appendFileSync("note.txt", "luiza");
+const chalk = require("chalk");
+
+console.log(`
+  ${chalk.blue.inverse.bold("validator")} ${chalk.red(
+  validator.isEmail("luiza.prata@gmail")
+)}`);
