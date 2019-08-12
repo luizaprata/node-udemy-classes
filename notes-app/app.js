@@ -6,3 +6,5 @@ console.log(`
   ${chalk.blue.inverse.bold("validator")} ${chalk.red(
   validator.isEmail("luiza.prata@gmail")
 )}`);
+
+console.log(process.argv);
