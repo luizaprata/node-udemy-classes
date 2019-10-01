@@ -8,12 +8,12 @@ yargs.command({
   describe: chalk.blue.bold("adding a new note"),
   builder: {
     title: {
-      describe: chalk.yellow("adding note title"),
+      describe: chalk.yellow("note title"),
       demandOption: true,
       type: "string"
     },
     body: {
-      describe: chalk.yellow("adding note body"),
+      describe: chalk.yellow("note body"),
       type: "string"
     }
   },
@@ -27,12 +27,12 @@ yargs.command({
   describe: chalk.blue.bold("removing a new note"),
   builder: {
     title: {
-      describe: chalk.yellow("adding note title"),
+      describe: chalk.yellow("note title"),
       demandOption: true,
       type: "string"
     }
   },
-  handler: function() {
+  handler: function(args) {
     notes.removeNote(args.title);
   }
 });
@@ -48,8 +48,15 @@ yargs.command({
 yargs.command({
   command: "read",
   describe: chalk.blue.bold("read a note"),
-  handler: function() {
-    console.log("read");
+  builder: {
+    title: {
+      describe: chalk.yellow("note title"),
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler: function(args) {
+    notes.readNote(args.title);
   }
 });
 

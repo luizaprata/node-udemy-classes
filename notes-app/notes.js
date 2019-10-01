@@ -8,6 +8,8 @@ const addNote = (title, body) => {
     return note.title === title;
   });
 
+  debugger;
+
   if (duplicateNotes.length === 0) {
     notes.push({
       title,
@@ -16,9 +18,9 @@ const addNote = (title, body) => {
 
     saveNotes(notes);
 
-    console.log(chalk.green.inverse("new note added!"));
+    console.log(chalk.green.inverse("new note added:"), title);
   } else {
-    console.log(chalk.yellow.inverse("note title already taken!"));
+    console.log(chalk.yellow.inverse("note title already taken:"), title);
   }
 };
 
@@ -29,14 +31,10 @@ const removeNote = title => {
 
   if (notes.length > notesToKeep.length) {
     saveNotes(notesToKeep);
-    console.log(chalk.green.inverse(`note removed: ${note.title}`));
+    console.log(chalk.green.inverse("note removed:"), title);
   } else {
-    console.log(chalk.yellow.inverse(`no note found: ${note.title}`));
+    console.log(chalk.yellow.inverse("no note found:"), title);
   }
-};
-
-const saveNotes = notes => {
-  fs.writeFileSync("notes.json", JSON.stringify(notes));
 };
 
 const loadNotes = () => {
@@ -45,13 +43,33 @@ const loadNotes = () => {
     const dataJSON = dataBuffer.toString();
     return JSON.parse(dataJSON);
   } catch (e) {
-    console.log(e);
     return [];
   }
+};
+
+const readNote = title => {
+  const notes = loadNotes();
+  const note = notes.find(note => note.title === title);
+
+  if (note) {
+    console.log(
+      chalk.green.inverse("note found:"),
+      note.title,
+      "\n",
+      note.body
+    );
+  } else {
+    console.log(chalk.yellow.inverse("no note found:"), title);
+  }
+};
+
+const saveNotes = notes => {
+  fs.writeFileSync("notes.json", JSON.stringify(notes));
 };
 
 module.exports = {
   loadNotes,
   removeNote,
+  readNote,
   addNote
 };
